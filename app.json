@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/webView",
+    "pages/logs/logs",
+    "pages/user/user",
+    "pages/user/personIfo/personIfo",
+    "pages/user/integral/integral",
+    "pages/user/coupon/coupon",
+    "pages/user/order/orderList/orderList",
+    "pages/user/order/orderDetail/orderDetail",
+    "pages/user/set/set",
+    "pages/user/set/about",
+    "pages/toLogin/toLogin",
+    "pages/scan/scan",
+    "pages/scan/shelf",
+    "pages/scan/cart",
+    "pages/orderPay/submit",
+    "pages/orderPay/pay",
+    "pages/orderPay/paySuc"
+    
+   
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f4a24b",
+    "navigationBarTitleText": "无人货架",
+    "navigationBarTextStyle": "white"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

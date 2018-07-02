@@ -1,0 +1,31 @@
+<!--个人信息  -->
+<view class='personIfo'>
+  <view class='item' style='height:150rpx;line-height:150rpx'>
+    <text class='left'>头像</text>
+    <image class='right' src='{{ifo.image}}' style='width:110rpx;height:110rpx'></image>
+  </view>
+  <view class='item' >
+    <text class='left'>昵称</text>
+    <text class='right'>{{ifo.name}}</text>
+  </view>
+  <view class='item' >
+    <text class='left'>性别</text>
+    <text class='right'>{{ifo.gender=='male' ? '男':'女'}}</text>
+  </view>
+  <view class='item' >
+    <text class='left'>生日</text>
+    <!-- <text class='right'>1990-01-01</text> -->
+    <picker class='right' mode="date" value="{{birthday}}" start="1900-01-01" end="2017-09-01" bindchange="bindBirthdayChange">
+    <view class="picker">
+     {{ifo.birth}}
+    </view>
+  </picker>
+  </view>
+  <view class='item' style='height:100rpx;line-height:100rpx'>
+    <text class='left'>手机号</text>
+    <text class='right'>{{ifo.phone}}</text>
+  </view>
+</view>
+<view class='save' bindtap="saveBtn">
+   保 存
+</view>

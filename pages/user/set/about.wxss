@@ -1,0 +1,41 @@
+.setlist {
+  height: 95rpx;
+  line-height: 95rpx;
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid #f1f1f1;
+  background-color: white;
+  font-weight: 700;
+}
+
+.setlist text:nth-child(1) {
+  float: left;
+  font-size: 26rpx;
+  color: #313131;
+}
+
+.setlist text:nth-child(2) {
+  float: right;
+  color: #b4b4b4;
+  font-size: 40rpx;
+}
+
+.iconImg {
+  height: 100rpx;
+  width: 100rpx;
+  /* background-color: yellow; */
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20rpx;
+}
+
+.aboutHead {
+  height: 200rpx;
+  width: 750rpx;
+  background-color: white;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 50rpx;
+  font-size: 26rpx;
+}
+
+

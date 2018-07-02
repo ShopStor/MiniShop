@@ -1,0 +1,10 @@
+<view class='about'>
+     <view class='aboutHead'>
+        <image class='iconImg' src='/static/images/logo.png'></image>
+        <text>1.0.0</text>
+     </view>
+     <!-- <view class='setlist'> -->
+       <!-- <text>协议和声明</text> -->
+       <!-- <text>></text> -->
+     <!-- </view> -->
+</view>

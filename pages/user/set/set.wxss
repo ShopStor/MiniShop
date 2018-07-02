@@ -1,0 +1,21 @@
+.set{
+  padding-top: 20rpx;
+}
+.setlist{
+  height: 95rpx;
+  line-height: 95rpx;
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid #f1f1f1;
+  background-color: white;
+  font-weight: 700;
+}
+.setlist text:nth-child(1){
+  float: left;
+  font-size: 26rpx;
+  color: #313131;
+}
+.setlist text:nth-child(2){
+   float: right;
+   color: #b4b4b4;
+   font-size: 40rpx;
+}

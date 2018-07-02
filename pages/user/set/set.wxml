@@ -1,0 +1,10 @@
+<view class='set'>
+  <view class='setlist'  bindtap='toAbout'>
+    <text>关于我们</text>
+    <text>></text>
+  </view>
+  <view  class='setlist' data-reply-phone="4001688810"  bindtap='toCall'>
+    <text>联系客服</text>
+    <text>></text>
+  </view>
+</view>
