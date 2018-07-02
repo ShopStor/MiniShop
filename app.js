@@ -1,6 +1,6 @@
 //app.js
 App({
-  upInfomation: function () {//更新用户信息  自动获取优惠券(调用此接口后code失效)
+  upInfomation: function () {//更新用户信息  自动获取优惠券(调用此接口后code失效)弃用
     var self =this
     console.log('用户信息更新')
     wx.getStorage(
