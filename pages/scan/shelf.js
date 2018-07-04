@@ -84,6 +84,9 @@ Page({
           foodsType.push(foods);
         }
         var bid = res.data.prolist[0].prolist[0].bid
+        // console.log('哈哈')
+        console.log('bid='+bid)
+        // console.log('呵呵')
         wx.setStorage({ key: "bid", data: Number(bid) })
         var prolists = res.data.prolist[0].prolist
 
@@ -98,7 +101,7 @@ Page({
             // console.log(item.id)
             // console.log(prolists[i].id)
             if (item.id == prolists[i].id) {
-              console.log('有匹配')
+             // console.log('有匹配')
               prolists[i].quantity = item.quantity
             }
           })
@@ -131,7 +134,7 @@ Page({
 
   },
   navbarTap: function (e) {
-    console.log(e)
+    //console.log(e)
     var that = this;
 
     this.setData({
@@ -142,11 +145,11 @@ Page({
     //刷新右侧内容的数据
     var screenId = this.data.screenId;
    // console.log(screenId);
-    console.log(that.data.foodsData);
+   // console.log(that.data.foodsData);
     var cartItems = wx.getStorageSync('cartItems') || []
     for (let i = 0; i < that.data.foodsData.length; i++) {
       if (screenId == that.data.foodsData[i].id) {
-        console.log(that.data.foodsData[i].prolist)
+       // console.log(that.data.foodsData[i].prolist)
         var prolist = that.data.foodsData[i].prolist
         for (let i = 0; i < prolist.length; i++) {
           if (prolist[i].image == null || prolist[i].image =='../../static/images/no_img.png') {
@@ -163,12 +166,12 @@ Page({
             // console.log(item.id)
             // console.log(prolists[i].id)
             if (item.id == prolist[i].id) {
-              console.log('有匹配')
+             // console.log('有匹配')
               prolist[i].quantity = item.quantity
             }
           })
         }
-        console.log(prolist)
+        //console.log(prolist)
         that.setData({
           childrenArray: prolist
         })
@@ -176,12 +179,12 @@ Page({
     }
   },
   minusCount:function (e){//数量减少
-    console.log(e)
+   // console.log(e)
     var self = this
-    console.log(e.currentTarget.dataset.screenid)
+   // console.log(e.currentTarget.dataset.screenid)
     var cartItems = wx.getStorageSync('cartItems') || []
     var childrenArray = self.data.childrenArray
-    console.log(cartItems)
+    //console.log(cartItems)
     cartItems.map((item,index) =>{
       if (item.id == e.currentTarget.dataset.screenid){
         var quantity =null
@@ -216,7 +219,7 @@ Page({
   },
   addCount: function (e) {//数量增加
     var self =this
-    console.log(e.currentTarget)
+   // console.log(e.currentTarget)
    // console.log(self.data.childrenArray)
     var childrenArray= self.data.childrenArray
     childrenArray.map((item) =>{
@@ -227,7 +230,7 @@ Page({
     self.setData({
       childrenArray: childrenArray
     })
-    console.log(childrenArray)
+    //console.log(childrenArray)
     // var foodsData = self.data.foodsData
     // console.log(self.data.foodsData)
     // console.log(self.data.screenId)

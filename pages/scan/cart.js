@@ -691,7 +691,7 @@ Page({
                   }
                 })
               }
-              wx.navigateTo({//跳转到货架吗页
+              wx.redirectTo({//跳转到货架吗页 navigateTo
                 url: '../scan/shelf?sid='+Request[1]
               })
             }
