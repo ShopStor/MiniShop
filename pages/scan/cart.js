@@ -545,7 +545,7 @@ Page({
   },
   toSubmit: function () {
     var self =this
-    if (this.data.totalPrice == 0 || this.data.totalPrice == 'NaN') {
+    if (this.data.totalPrice == 'NaN' || self.data.carts.length==0) {
       wx.showToast({
         title: '请选择商品',
         icon: 'succes',

@@ -62,6 +62,7 @@ Page({
     // console.log('useCoupons' + useCoupons)
     // console.log('sid' + sid)
     // console.log('bid' + bid)
+    
     wx.request({
       url: textUrl + 'oms/addOmsOrder',
       data: {
@@ -109,6 +110,147 @@ Page({
       })
     }
   },
+  normalPay:function (){//正常支付
+    var self = this
+    wx.getStorage(
+      {
+        key: 'payData',//
+        success: function (payData) {
+          //调取支付接口
+          //获取后台返回参数，传入后台获取参数，调取微信支付，成功后页面跳转
+          var payData = payData.data
+          console.log(payData)
+          console.log('top2')
+          wx.requestPayment(
+            {
+              'timeStamp': payData.timeStamp,
+              'nonceStr': payData.nonce_str,
+              'package': 'prepay_id=' + payData.prepay_id,
+              'signType': 'MD5',
+              'paySign': payData.paySign,
+              'success': function (res) {
+                //   console.log(res)
+                //  console.log('支付正确')
+                console.log('top3')
+                self.setData({
+                  backState: false
+                })
+                wx.redirectTo({//跳转支付成功页面
+                  url: '/pages/orderPay/paySuc'
+                })
+              },
+              'fail': function (res) {
+                console.log('支付错误')
+                self.setData({
+                  backState: true
+                })
+                wx.redirectTo({//跳转首页
+                  url: '../index/index'
+                })
+                console.log(res.errMsg)
+                wx.showModal({
+                  title: '提示',
+                  content: '支付失败',
+                })
+              },
+              'complete': function (res) {//上线注释
+                wx.removeStorage({
+                  key: 'cartItems',
+                  success: function (res) {
+                  }
+                })
+                wx.removeStorage({
+                  key: 'amount',
+                  success: function (res) {
+                  }
+                })
+                wx.removeStorage({
+                  key: 'carts',
+                  success: function (res) {
+                  }
+                })
+                wx.removeStorage({
+                  key: 'pay_money',
+                  success: function (res) {
+                  }
+                })
+                wx.removeStorage({
+                  key: 'is_coupon_allowed',
+                  success: function (res) {
+                  }
+                })
+                wx.removeStorage({
+                  key: 'smsorderid',
+                  success: function (res) {
+                  }
+                })
+                wx.removeStorage({
+                  key: 'useCoupon',
+                  success: function (res) {
+                  }
+                })
+                wx.removeStorage({
+                  key: 'manAmount',
+                  success: function (res) {
+                  }
+                })
+                wx.removeStorage({
+                  key: 'sid',
+                  success: function (res) {
+                  }
+                })
+                wx.removeStorage({
+                  key: 'couponTitle',
+                  success: function (res) {
+                  }
+                })
+                // self.setData({
+                //   backState: false
+                // })
+                // wx.redirectTo({//跳转支付成功页面
+                //   url: '/pages/orderPay/paySuc'
+                // })
+              }
+            })
+        }
+      })
+  },
+  RMBpayment:function(){//0元支付
+    var self= this
+    var payData = wx.getStorageSync('payData')
+    wx.request({//
+      url: textUrl + 'oms/subDelivery',
+      data: {
+        sn: payData.ordersn,
+        uuid:uuid,
+      },
+      method: "POST",
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      success: function (res) {
+        self.setData({
+          backState: false
+        })
+        if (res.data.type == "success"){//成功
+        wx.redirectTo({//跳转支付成功页面
+          url: '/pages/orderPay/paySuc'
+        })
+        }else{
+          wx.redirectTo({//跳转首页
+            url: '../index/index'
+          })
+          console.log(res.errMsg)
+          wx.showModal({
+            title: '提示',
+            content: '支付失败',
+          })
+        }
+        
+        console.log(res)
+      }
+    })
+  },
   toPay: function () {
     console.log('开始支付')
     var self = this
@@ -117,103 +259,14 @@ Page({
   //  console.log(payData)
     console.log('top1')
    // console.log(payData.data.paySign)
-   wx.getStorage(
-     {
-       key: 'payData',//
-       success: function (payData) {
-         //调取支付接口
-         //获取后台返回参数，传入后台获取参数，调取微信支付，成功后页面跳转
-         var payData = payData.data
-         console.log(payData)
-         console.log('top2')
-         wx.requestPayment(
-           {
-             'timeStamp': payData.timeStamp,
-             'nonceStr': payData.nonce_str,
-             'package': 'prepay_id=' + payData.prepay_id,
-             'signType': 'MD5',
-             'paySign': payData.paySign,
-             'success': function (res) {
-               //   console.log(res)
-               //  console.log('支付正确')
-               console.log('top3')
-               self.setData({
-                 backState: false
-               })
-               wx.redirectTo({//跳转支付成功页面
-                 url: '/pages/orderPay/paySuc'
-               })
-             },
-             'fail': function (res) {
-               console.log('支付错误')
-               self.setData({
-                 backState: true
-               })
-               wx.redirectTo({//跳转首页
-                 url: '../index/index'
-               })
-             },
-             'complete': function (res) {//上线注释
-               wx.removeStorage({
-                 key: 'cartItems',
-                 success: function (res) {
-                 }
-               })
-               wx.removeStorage({
-                 key: 'amount',
-                 success: function (res) {
-                 }
-               })
-               wx.removeStorage({
-                 key: 'carts',
-                 success: function (res) {
-                 }
-               })
-               wx.removeStorage({
-                 key: 'pay_money',
-                 success: function (res) {
-                 }
-               })
-               wx.removeStorage({
-                 key: 'is_coupon_allowed',
-                 success: function (res) {
-                 }
-               })
-               wx.removeStorage({
-                 key: 'smsorderid',
-                 success: function (res) {
-                 }
-               })
-               wx.removeStorage({
-                 key: 'useCoupon',
-                 success: function (res) {
-                 }
-               })
-               wx.removeStorage({
-                 key: 'manAmount',
-                 success: function (res) {
-                 }
-               })
-               wx.removeStorage({
-                 key: 'sid',
-                 success: function (res) {
-                 }
-               })
-               wx.removeStorage({
-                 key: 'couponTitle',
-                 success: function (res) {
-                 }
-               })
-               // self.setData({
-               //   backState: false
-               // })
-               // wx.redirectTo({//跳转支付成功页面
-               //   url: '/pages/orderPay/paySuc'
-               // })
-             }
-           })
-        }
-     })      
+    console.log(this.data.payMoney)
+    if (this.data.payMoney==0){
+      self.RMBpayment()
+      console.log('0元付')
+    }else{
+      console.log('正常支付')
+      self.normalPay()
+    }
    }
 })
 

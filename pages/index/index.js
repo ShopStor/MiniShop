@@ -279,9 +279,13 @@ Page({
   toAdsense: function (e) {
     var item = e.currentTarget.dataset.url;
     // console.log(e)
-    wx.navigateTo({
-      url: '../index/webView?url=' + item
-    })
+    console.log(item)
+    if (item){
+      wx.navigateTo({
+        url: '../index/webView?url=' + item
+      })
+    }
+    
   },
   indexScan: function () {//扫一扫
     // wx.navigateTo({//测试用
@@ -515,6 +519,7 @@ Page({
         }
       },
       success: function (res) {
+        console.log(res)
         if (res.data.code == 0) {
           resolve(res)
         }

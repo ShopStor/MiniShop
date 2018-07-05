@@ -118,6 +118,7 @@
 }
 
 .modalFoot {
+  text-align: center;
   height: 90rpx;
   line-height: 90rpx;
   border-top: 1rpx solid EBEBEB;

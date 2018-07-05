@@ -20,7 +20,7 @@
     </view>
     <view class='modalFoot'>
       <view bindtap="cancel">关闭</view>
-      <view  bindtap="toSee">立即查看</view>
+      <view  bindtap="toSee" wx:if="{{isSee}}">立即查看</view>
     </view>
   </view>
   <view class='paySucHead'>

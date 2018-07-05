@@ -17,6 +17,7 @@ Page({
     num: '',
     backState:true,//返回主页
     payment:null,//无优惠券时 显示广告
+    isSee: true,//立即查看按钮显示
   },
   cancel: function () {
     this.setData({
@@ -26,12 +27,15 @@ Page({
   toAdsense: function (e) {
     var item = e.currentTarget.dataset.url;
     //console.log(item)
-    this.setData({
-      backState: false
-    })
-    wx.navigateTo({
-      url: '../index/webView?url=' + item
-    })
+    if (item){//
+      this.setData({
+        backState: false
+      })
+      wx.navigateTo({
+        url: '../index/webView?url=' + item
+      })
+    }
+    
   },
   toSee: function () {
     this.setData({
@@ -40,7 +44,7 @@ Page({
     
     if (this.data.payment){//跳转到广告宣传页
       var url = this.data.payment.url
-     // console.log(url)
+      console.log(url)
       wx.navigateTo({
         url: '../index/webView?url=' + url
       })
@@ -103,7 +107,7 @@ Page({
     wx.request({
       url: textUrl + 'user/getOrderCouponList',
       data: {
-        "orderno": payData.ordersn,//payData.orderno
+        "orderno": payData.ordersn,//payData.ordersn
          //"orderno": 'DO100031052',
         "uuid": uuid
       },
@@ -131,7 +135,7 @@ Page({
   },
   getPaymentList(){
     var self =this
-    wx.request({//获取轮播图
+    wx.request({//广告
       url: textUrl + 'sms/getAdsenseList',
       data: {
         position: 'payment'
@@ -152,7 +156,12 @@ Page({
         self.setData({
           payment:res.data[0]
         })
-        //console.log(res)
+        if (!res.data[0].url){
+          self.setData({//立即查看按钮隐藏
+            isSee:false
+          })
+        }
+        console.log(res)
         
       }
     })
