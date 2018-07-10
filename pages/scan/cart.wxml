@@ -1,5 +1,5 @@
 <view class='cart'>
-
+ <view class='Cover' wx:if ='{{Cover}}'></view>
   <!-- 头部  -->
   <view class='cartHead' wx:hide="{{headHide}}">
   <!-- smsorderid toAdd -->

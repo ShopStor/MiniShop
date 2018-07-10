@@ -85,7 +85,15 @@ page {
   display: block;
   margin-top: 44rpx;
 }
-
+#red{
+   position: absolute;
+  margin-top: -26rpx;
+  width: 12rpx;
+  height: 12rpx;
+  background: red;
+  border-radius: 100%; 
+  left: 410rpx;  
+}
 .user_bal_itemdesc {
   font-size: 40rpx;
   margin-top: 20rpx !important;

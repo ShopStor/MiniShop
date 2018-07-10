@@ -16,7 +16,8 @@ Page({
     headHide: false,//头部活动是否隐藏
     smsorderid: '',//活动id
     smsOrderText: '',//去凑单名称
-    backState:true,
+    // backState:true,
+    Cover: true,//遮罩层
   },
   //---------------onLoad
   // navigateBack:function (objc){
@@ -57,6 +58,7 @@ Page({
   },
   //---------------onShow
   onShow(options) {
+    
     //清除
     var pay_money = wx.getStorageSync('pay_money')//满减后金额
     if (pay_money) {
@@ -98,8 +100,15 @@ Page({
   },
   getgoodsIfon(){//根据页面链接带有信息 进行数据整理
     //console.log('onshow')
+    wx.showLoading({
+      title: '加载中',
+    })
+    this.setData({
+      Cover: true
+    })
     var that = this;
     var cartItems = wx.getStorageSync('cartItems') || []
+   
     //console.log(cartItems)
    // console.log(this.data.typeCart)
     if (this.data.typeCart == 1) {//是货架过来的
@@ -113,11 +122,10 @@ Page({
         data: cartItems
       })
       this.setData({
-        sid: sid
+        sid: sid,
+        carts: cartItems
       }),
-        this.setData({
-          carts: cartItems
-        }),
+       
         //this.getTotalPrice();
       this.getSmsOrder();
     } else if (this.data.typeCart == 2) {//是商品过来的
@@ -138,9 +146,15 @@ Page({
           console.log(res)
           if (res.data.is_marketable){
 
-            wx.setStorage({
+            wx.setStorage({//商铺id
               key: 'bid',
               data: Number(res.data.bid),
+              success: function (res) {
+              }
+            })
+            wx.setStorage({//货架id
+              key: 'sid',
+              data: res.data.wms_shelves,
               success: function (res) {
               }
             })
@@ -198,12 +212,7 @@ Page({
               success: function (res) {
               }
             })
-            wx.setStorage({
-              key: 'sid',
-              data: res.data.wms_shelves,
-              success: function (res) {
-              }
-            })
+            
             // let carts = cartItems;         // 获取购物车列表
             // let total = 0;
             // for (let i = 0; i < carts.length; i++) {     // 循环列表得到每个数据
@@ -216,6 +225,9 @@ Page({
             // });
             that.getSmsOrder();
           }else{
+            wx.redirectTo({//跳转主页
+              url: '../index/index'
+            })
             wx.showToast({
               title: '商品已下架',
               image: '/static/images/prompt.png',
@@ -361,6 +373,7 @@ Page({
       orderitems.push(orderObj)
     }
     var bid = wx.getStorageSync('bid') || ''
+    console.log('bid=' + bid)
     if(carts.length==0){
       wx.setStorage({
         key: 'pay_amount',
@@ -413,8 +426,10 @@ Page({
           success: function (res) {
           }
         })
+        wx.hideLoading()
         that.setData({                // 最后赋值到data中渲染到页面
-          totalPrice: res.data.pay_amount.toFixed(2)
+          totalPrice: res.data.pay_amount.toFixed(2),
+           Cover: false,//遮罩层隐藏
         });
 
         //加入购物车数据，存入缓存
@@ -545,6 +560,12 @@ Page({
   },
   toSubmit: function () {
     var self =this
+    wx.showLoading({
+      title: '加载中',
+    })
+    this.setData({
+      Cover: true
+    })
     if (this.data.totalPrice == 'NaN' || self.data.carts.length==0) {
       wx.showToast({
         title: '请选择商品',
@@ -632,9 +653,13 @@ Page({
               success: function (res) {
               }
             })
-            that.setData({
-              backState: false
-            })
+            // that.setData({
+            //   backState: false
+            // })
+            wx.hideLoading()
+            self.setData({
+              Cover: false,//遮罩层隐藏
+            });
             wx.navigateTo({//跳转到提交订单页面
               url: '/pages/orderPay/submit'
             })
@@ -646,9 +671,9 @@ Page({
     var sid = wx.getStorageSync('sid')
     if (this.data.typeCart == 1) {
       console.log(sid)
-      this.setData({
-        backState: false
-      })
+      // this.setData({
+      //   backState: false
+      // })
       wx.navigateTo({
         url: '/pages/scan/shelf?sid=' + sid
       })
@@ -658,9 +683,9 @@ Page({
   },
   toScan: function () {//扫一扫
     var self =this
-    this.setData({
-      backState: false
-    })
+    // this.setData({
+    //   backState: false
+    // })
     wx.scanCode({
       onlyFromCamera: true,
       success: (res) => {
@@ -683,14 +708,16 @@ Page({
               //   url: '../scan/cart?typeCart=2&&pid='+Request[1]
               // })
             } else if (Request[0] == 'sid') {
-              var cartItems = wx.getStorageSync('cartItems')//所有商品缓存数据
-              if (cartItems) {
-                wx.removeStorage({
-                  key: 'cartItems',
-                  success: function (res) {
-                  }
-                })
-              }
+              util.clearStorageData()
+              // var cartItems = wx.getStorageSync('cartItems')//所有商品缓存数据
+              // if (cartItems) {
+              //   wx.removeStorage({
+              //     key: 'cartItems',
+              //     success: function (res) {
+              //     }
+              //   })
+              // }
+
               wx.redirectTo({//跳转到货架吗页 navigateTo
                 url: '../scan/shelf?sid='+Request[1]
               })

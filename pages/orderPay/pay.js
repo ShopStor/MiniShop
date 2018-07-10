@@ -19,14 +19,19 @@ Page({
     total_micro_second: 300 * 1000,
     ishow:true,
     backState:true,//true返回主页
+    Cover:true,//遮罩层
   },
   onLoad: function (options) {
     if (!uuid) {
       uuid = wx.getStorageSync('userarg')
     }
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this;
     countdown(this);
     that.setData({
+      Cover:true,
       payMoney: options.payMoney
     })
     wx.getStorage({
@@ -54,7 +59,7 @@ Page({
       orderitems.push(orderObj)
     }
     //获得数据
-    var bid = wx.getStorageSync('bid') || ''
+    var bid = wx.getStorageSync('bid')
 
     // console.log('orderitems' + orderitems)
     // console.log('smsorderid' + smsorderid)
@@ -86,9 +91,11 @@ Page({
           key: 'payData',
           data: res.data,
           success: function (res) {
-            // wx.redirectTo({//跳转支付页面
-            //   url: "/pages/orderPay/pay?pay_amount=" + pay_amount
-            // })
+            //遮罩层隐藏
+            wx.hideLoading()
+            that.setData({
+              Cover: false,
+            })
           }
         })
 
@@ -229,13 +236,14 @@ Page({
         "Content-Type": "application/x-www-form-urlencoded"
       },
       success: function (res) {
+        console.log(res)
         self.setData({
           backState: false
         })
         if (res.data.type == "success"){//成功
-        wx.redirectTo({//跳转支付成功页面
-          url: '/pages/orderPay/paySuc'
-        })
+          wx.redirectTo({//跳转支付成功页面
+            url: '/pages/orderPay/paySuc'
+          })
         }else{
           wx.redirectTo({//跳转首页
             url: '../index/index'
@@ -254,12 +262,13 @@ Page({
   toPay: function () {
     console.log('开始支付')
     var self = this
-  //   var payData = {}
-  //   payData = wx.getStorageSync('payData')
-  //  console.log(payData)
     console.log('top1')
-   // console.log(payData.data.paySign)
     console.log(this.data.payMoney)
+    // var payData = wx.getStorageSync('payData')
+    // console.log(payData)
+    // console.log("sn="+payData.ordersn)
+    // console.log("uuid=" + uuid)
+
     if (this.data.payMoney==0){
       self.RMBpayment()
       console.log('0元付')

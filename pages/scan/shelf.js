@@ -15,6 +15,7 @@ Page({
     screenId: "",  //后台查询需要的字段(点击左侧存的id)
     childrenArray: [], //右侧内容
     options:null,
+    Cover:true,//遮罩层
   },
   onShow:function (){
     var options = this.data.options
@@ -28,8 +29,12 @@ Page({
     }
     var that = this;
     // 获取货架码
+    wx.showLoading({
+      title: '加载中',
+    })
     console.log(options.sid)
     that.setData({
+      Cover:true,
       sid: Number(options.sid),
       cartNum: cartNum,
       cartMoney: total.toFixed(2)
@@ -84,9 +89,7 @@ Page({
           foodsType.push(foods);
         }
         var bid = res.data.prolist[0].prolist[0].bid
-        // console.log('哈哈')
         console.log('bid='+bid)
-        // console.log('呵呵')
         wx.setStorage({ key: "bid", data: Number(bid) })
         var prolists = res.data.prolist[0].prolist
 
@@ -115,10 +118,6 @@ Page({
           screenSite: res.data.shname,
           screenId: res.data.prolist[0].id
         })
-
-        // console.log(foodsType)
-        // console.log(prolists)
-        // console.log(that.data.screenId)
       }
     })
 
@@ -128,8 +127,11 @@ Page({
     //   key: 'cartItems',
     //   data: [],
     // })
+    wx.showLoading({
+      title: '加载中',
+    })
     this.setData({
-      options: options
+      options: options,
     })
 
   },
@@ -296,6 +298,10 @@ Page({
     self.setData({
       cartNum: cartNum,
       cartMoney: util.toDecimal2(total)
+    })
+    wx.hideLoading()
+    self.setData({
+      Cover: false
     })
   },
   addGoods: function (e) {//此方法已弃用

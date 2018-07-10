@@ -3,7 +3,7 @@ const app = getApp()
 var textUrl = app.globalData.textUrl
 var uuid = app.globalData.uuid
 var util = require('../../../utils/util.js');
-//var uuid = '23e9d10e08bd479bba9a725a9a1ac504'
+//var uuid = '327f9390d11d4a3aa0ff712d656a7252'
 Page({
   data: {
     pagenumber: 1,
@@ -225,6 +225,12 @@ Page({
   toUse: function (e) {
     //本地没有商品存储，点击立即使用优惠券跳转首页
     //本地有商品存储，点击立即使用优惠券跳回购物车提交订单页
+    console.log(e)
+    //已使用  use
+    
+    if (e.currentTarget.dataset.item.use = "立即使用"){
+      return false
+    }
     var cartItems = wx.getStorageSync('cartItems') || ''
 
     if (cartItems == '') {

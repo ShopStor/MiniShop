@@ -1,4 +1,5 @@
 <view class="classify">
+<view class='Cover' wx:if ='{{Cover}}'></view>
   <view class="goods-banner">
     <view class="img-banner">
       <image src='/static/images/index_addre.png'></image>

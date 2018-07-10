@@ -1,4 +1,5 @@
 <view class='pay'>
+ <view class='Cover' wx:if ='{{Cover}}'></view>
   <view class='payHead'>
     <text>确认付款（元）</text>
     <text>{{payMoney}}</text>

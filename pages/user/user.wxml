@@ -20,7 +20,9 @@
           <text class='user_bal_itemdesc'>￥0.00</text>
         </view> -->
         <view class='user_bal_item' bindtap='toCoupon'>
-          <text>优惠券</text>
+          <text>优惠券
+          <!-- <text id='red'></text>   -->
+          </text>
           <text class='user_bal_itemdesc'>{{CouponNum}}</text>
         </view>
         <!-- <view class='user_bal_item' bindtap='jumpIntegral'>

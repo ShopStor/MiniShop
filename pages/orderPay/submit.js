@@ -106,7 +106,7 @@ Page({
         // }
       } else {
         this.setData({
-          hasCoupon: '查看优惠券'
+          hasCoupon: '请选择优惠券'
         });
       }
       this.setData({
@@ -138,7 +138,7 @@ Page({
       key: 'couponDetail',
       success: function (res) {
         self.setData({
-          hasCoupon:'查看优惠券',
+          hasCoupon:'请选择优惠券',
           cheackCoupon:false,
           pay_money: Number(wx.getStorageSync('pay_money'))
         });
