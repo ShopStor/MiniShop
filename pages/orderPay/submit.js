@@ -168,9 +168,22 @@ Page({
       success: function (res) {
       }
     })
-    var pay_money = that.data.pay_money
-    wx.navigateTo({//跳转支付页面
-      url: "/pages/orderPay/pay?payMoney=" + pay_money
-    })
+    var bid = wx.getStorageSync('bid') || ''
+    console.log('bid='+bid)
+    if(bid){// 解决bid不存在灵异情况
+      var pay_money = that.data.pay_money
+      wx.navigateTo({//跳转支付页面
+        url: "/pages/orderPay/pay?payMoney=" + pay_money
+      })
+    }else{
+      wx.redirectTo({//跳转主页
+        url: '../index/index'
+      })
+      wx.showModal({
+        title: '提示',
+        content: '订单生成失败',
+      })
+    }
+    
   }
 })

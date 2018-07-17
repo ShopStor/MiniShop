@@ -83,6 +83,6 @@ App({
 
     textUrl:'https://minisuper.shinshop.com/web/',//正式域名
     smallImgUrl: 'https://minisuper.shinshop.com/web/imsmanager/image_',//正式
-    uuid: wx.getStorageSync('userarg') || '',//wx.getStorageSync('userarg') || ''  41e88a10eb324a84aa14094255b4fbd6
+    uuid: wx.getStorageSync('userarg') || '',//wx.getStorageSync('userarg') || ''  e867964cd1bd460d9c8ecd6ed4848e5a
   }
 })

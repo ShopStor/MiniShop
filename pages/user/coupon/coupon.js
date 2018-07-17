@@ -228,7 +228,7 @@ Page({
     console.log(e)
     //已使用  use
     
-    if (e.currentTarget.dataset.item.use = "立即使用"){
+    if (e.currentTarget.dataset.item.use != "立即使用"){
       return false
     }
     var cartItems = wx.getStorageSync('cartItems') || ''

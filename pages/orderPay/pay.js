@@ -86,19 +86,40 @@ Page({
         //console.log(res)
       },
       success: function (res) {
-         console.log(res)
-        wx.setStorage({
-          key: 'payData',
-          data: res.data,
-          success: function (res) {
-            //遮罩层隐藏
-            wx.hideLoading()
-            that.setData({
-              Cover: false,
-            })
-          }
-        })
+        console.log(res)
+        if (res.data.state == "success"){
+           wx.setStorage({
+             key: 'payData',
+             data: res.data,
+             success: function (res) {
+               //遮罩层隐藏
+               wx.hideLoading()
+               that.setData({
+                 Cover: false,
+               })
+             }
+           })
+         }else{
+          wx.hideLoading()
+          that.setData({
+            Cover:true
+          })
+          wx.showModal({
+            title: '提示',
+            content: '订单生成失败',
+            success:function(res){
+              wx.redirectTo({//跳转主页
+                url: '../index/index'
+              })
+              // if (res.confirm) {
+              //   console.log('用户点击确定')
+              // } else if (res.cancel) {
+              //   console.log('用户点击取消')
+              // }
 
+            }
+          })
+         }
       }
     })
   },
@@ -142,25 +163,10 @@ Page({
                 self.setData({
                   backState: false
                 })
+                
                 wx.redirectTo({//跳转支付成功页面
                   url: '/pages/orderPay/paySuc'
                 })
-              },
-              'fail': function (res) {
-                console.log('支付错误')
-                self.setData({
-                  backState: true
-                })
-                wx.redirectTo({//跳转首页
-                  url: '../index/index'
-                })
-                console.log(res.errMsg)
-                wx.showModal({
-                  title: '提示',
-                  content: '支付失败',
-                })
-              },
-              'complete': function (res) {//上线注释
                 wx.removeStorage({
                   key: 'cartItems',
                   success: function (res) {
@@ -211,6 +217,23 @@ Page({
                   success: function (res) {
                   }
                 })
+              },
+              'fail': function (res) {
+                console.log('支付错误')
+                self.setData({
+                  backState: true
+                })
+                wx.redirectTo({//跳转首页
+                  url: '../index/index'
+                })
+                console.log(res.errMsg)
+                wx.showModal({
+                  title: '提示',
+                  content: '支付失败',
+                })
+              },
+              'complete': function (res) {//上线注释
+                
                 // self.setData({
                 //   backState: false
                 // })
@@ -254,7 +277,6 @@ Page({
             content: '支付失败',
           })
         }
-        
         console.log(res)
       }
     })

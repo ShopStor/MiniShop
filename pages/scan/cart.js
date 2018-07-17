@@ -145,7 +145,25 @@ Page({
         success: function (res) {
           console.log(res)
           if (res.data.is_marketable){
-
+           // console.log(cartItems)
+            if (cartItems.length>0 && res.data.wms_shelves != cartItems[0].sid){//用于判断现在扫的是否跟之前商品  为同一货架
+              wx.hideLoading()
+              that.setData({
+                Cover: false
+              })
+              wx.showModal({
+                title: '提示',
+                content: '此商品跟之前商品货架不一致,请先结算先前商品',
+                success: function (res) {
+                  if (res.confirm) {
+                    console.log('用户点击确定')
+                  } else if (res.cancel) {
+                    console.log('用户点击取消')
+                  }
+                }
+              })
+              return false
+            }
             wx.setStorage({//商铺id
               key: 'bid',
               data: Number(res.data.bid),
@@ -174,7 +192,8 @@ Page({
                 price: res.data.price,
                 title: res.data.name,
                 goodsPicsInfo: res.data.image,
-                selected: true
+                selected: true,
+                sid: res.data.wms_shelves
               })
             } else {
               //判断购物车缓存中是否已存在该货品
@@ -194,6 +213,7 @@ Page({
                       title: res.data.name,
                       goodsPicsInfo: res.data.image,
                       selected: true,
+                      sid: res.data.wms_shelves
                     })
                   }
                 }
@@ -441,9 +461,6 @@ Page({
         })
       }
     }) 
-
-
-
   },
   selectList(e) {
     var self = this
@@ -689,16 +706,14 @@ Page({
     wx.scanCode({
       onlyFromCamera: true,
       success: (res) => {
-        console.log(res)
-
-
+        //console.log(res)
         var url = res.result
         if (url.indexOf("?") != -1) {
           var str = url.split("?");
           if (str[1].indexOf("=") != -1) {
             var Request = str[1].split("=");
             if (Request[0] == 'pid') {//停留在本页(商品码)
-              console.log(Request[1])
+              //console.log(Request[1])
                 self.setData({
                   typeCart: 2,
                   pid: Request[1]
