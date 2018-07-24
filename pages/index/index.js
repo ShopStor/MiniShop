@@ -44,7 +44,7 @@ Page({
     })
   },
   goToShop: function () {//点击去购物
-    console.log('123')
+   // console.log('123')
     wx.navigateTo({
       url: '../index/webView?url=' + 'https://m.shinshop.com/'
     })
@@ -226,11 +226,6 @@ Page({
                       title: '提示',
                       content: res.data.content,
                     })
-                    //that.getCode()//重新获取code
-
-                    //  wx.redirectTo({//跳转主页
-                    //    url: '../index/index'
-                    //  })
                     console.log(res.data.content)
                   } else {
                     wx.setStorage({ key: "userTel", data: that.data.userNumber }) //信息存本地

@@ -75,11 +75,10 @@ App({
   globalData: {
     userInfo: null,
     userTel:null,
-   //textUrl: 'https://minisuperuat.shinshop.com/web/',//测试域名
-    //smallImgUrl: 'https://minisuperuat.shinshop.com/web/imsmanager/image_',//测试
     imgUrl: 'http://s3.cn-north-1.amazonaws.com.cn/s3-004-shinho-dubbo-prd-bjs/datas/image/adsense/',
 
-
+    // textUrl: 'https://minisuperuat.shinshop.com/web/',//测试域名
+    // smallImgUrl: 'https://minisuperuat.shinshop.com/web/imsmanager/image_',//测试
 
     textUrl:'https://minisuper.shinshop.com/web/',//正式域名
     smallImgUrl: 'https://minisuper.shinshop.com/web/imsmanager/image_',//正式

@@ -61,12 +61,12 @@ Page({
     //获得数据
     var bid = wx.getStorageSync('bid')
 
-    // console.log('orderitems' + orderitems)
-    // console.log('smsorderid' + smsorderid)
-    // console.log('uuid' + uuid)
-    // console.log('useCoupons' + useCoupons)
-    // console.log('sid' + sid)
-    // console.log('bid' + bid)
+    console.log('orderitems' + orderitems)
+    console.log('smsorderid' + smsorderid)
+    console.log('uuid' + uuid)
+    console.log('useCoupons' + useCoupons)
+    console.log('sid' + sid)
+    console.log('bid' + bid)
     
     wx.request({
       url: textUrl + 'oms/addOmsOrder',
@@ -106,7 +106,7 @@ Page({
           })
           wx.showModal({
             title: '提示',
-            content: '订单生成失败',
+            content: res.data.message,
             success:function(res){
               wx.redirectTo({//跳转主页
                 url: '../index/index'
