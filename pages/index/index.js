@@ -63,7 +63,7 @@ Page({
     })
   },
   isPhoneNo: function (phone){//验证手机号
-    var pattern = /^1[34578]\d{9}$/;
+    var pattern = /^1[345678]\d{9}$/;
     return pattern.test(phone); 
   },
   sendCode: function (e) {//发送验证码

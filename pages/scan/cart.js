@@ -189,7 +189,8 @@ Page({
               cartItems.push({
                 id: res.data.id,
                 quantity: 1,
-                price: res.data.price,
+                price: res.data.price,//销售价
+                activityPrice: res.data.activityPrice,//活动价
                 title: res.data.name,
                 goodsPicsInfo: res.data.image,
                 selected: true,
@@ -209,7 +210,8 @@ Page({
                     cartItems.push({
                       id: res.data.id,
                       quantity: 1,
-                      price: res.data.price,
+                      price: res.data.price,//销售价
+                      activityPrice: res.data.activityPrice,//活动价
                       title: res.data.name,
                       goodsPicsInfo: res.data.image,
                       selected: true,
@@ -387,10 +389,13 @@ Page({
     var orderObj = new Object;
     var carts = this.data.carts;
     for (let i = 0; i < carts.length; i++) {
-      let num = carts[i].quantity
-      let pid = carts[i].id
-      orderObj = { num, pid }
-      orderitems.push(orderObj)
+      //console.log(carts[i])
+      if (carts[i].selected){
+        let num = carts[i].quantity
+        let pid = carts[i].id
+        orderObj = { num, pid }
+        orderitems.push(orderObj)
+      } 
     }
     var bid = wx.getStorageSync('bid') || ''
     console.log('bid=' + bid)
@@ -583,12 +588,15 @@ Page({
     this.setData({
       Cover: true
     })
-    if (this.data.totalPrice == 'NaN' || self.data.carts.length==0) {
+    if (this.data.totalPrice == 'NaN' || self.data.carts.length == 0 || this.data.totalPrice==0) {
       wx.showToast({
         title: '请选择商品',
         icon: 'succes',
         duration: 1000,
         mask: true
+      })
+      this.setData({
+        Cover: false
       })
 
     } else {

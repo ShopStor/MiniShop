@@ -77,11 +77,11 @@ App({
     userTel:null,
     imgUrl: 'http://s3.cn-north-1.amazonaws.com.cn/s3-004-shinho-dubbo-prd-bjs/datas/image/adsense/',
 
-    // textUrl: 'https://minisuperuat.shinshop.com/web/',//测试域名
-    // smallImgUrl: 'https://minisuperuat.shinshop.com/web/imsmanager/image_',//测试
+    textUrl: 'https://minisuperuat.shinshop.com/web/',//测试域名
+    smallImgUrl: 'https://minisuperuat.shinshop.com/web/imsmanager/image_',//测试
 
-    textUrl:'https://minisuper.shinshop.com/web/',//正式域名
-    smallImgUrl: 'https://minisuper.shinshop.com/web/imsmanager/image_',//正式
+    // textUrl:'https://minisuper.shinshop.com/web/',//正式域名
+    // smallImgUrl: 'https://minisuper.shinshop.com/web/imsmanager/image_',//正式
     uuid: wx.getStorageSync('userarg') || '',//wx.getStorageSync('userarg') || ''  e867964cd1bd460d9c8ecd6ed4848e5a
   }
 })

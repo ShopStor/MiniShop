@@ -140,7 +140,7 @@
 .goodsPrice {
   margin-top: 20rpx;
   float: left;
-  width: 150rpx
+  width: 80rpx
 }
 
 .goods .addIconItem {

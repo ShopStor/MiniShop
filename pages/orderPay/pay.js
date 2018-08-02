@@ -277,7 +277,7 @@ Page({
             content: '支付失败',
           })
         }
-        console.log(res)
+        //console.log(res)
       }
     })
   },
