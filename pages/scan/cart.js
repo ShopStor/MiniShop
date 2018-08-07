@@ -84,18 +84,6 @@ Page({
    
   },
   onUnload(){
-    // if (this.data.backState){//返回
-    //   console.log('返回')
-    //   if (this.data.typeCart == 1) {//货架
-    //     wx.navigateTo({//货架  ../scan/shelf?sid=
-    //       url: '../scan/shelf?sid=' + this.data.sid
-    //     })
-    //   } else {//2商品
-    //     wx.navigateTo({//跳转首页
-    //       url: '../index/index'
-    //     })
-    //   }
-    // }
     
   },
   getgoodsIfon(){//根据页面链接带有信息 进行数据整理
@@ -117,10 +105,7 @@ Page({
       for (let i = 0; i < cartItems.length; i++) {
         cartItems[i].selected = true;
       }
-      wx.setStorage({
-        key: "cartItems",
-        data: cartItems
-      })
+      wx.setStorageSync('cartItems', cartItems)
       this.setData({
         sid: sid,
         carts: cartItems
@@ -190,7 +175,7 @@ Page({
                 id: res.data.id,
                 quantity: 1,
                 price: res.data.price,//销售价
-                activityPrice: res.data.activityPrice,//活动价
+                activity_price:res.data.activity_price,//活动价
                 title: res.data.name,
                 goodsPicsInfo: res.data.image,
                 selected: true,
@@ -211,7 +196,7 @@ Page({
                       id: res.data.id,
                       quantity: 1,
                       price: res.data.price,//销售价
-                      activityPrice: res.data.activityPrice,//活动价
+                      activity_price: res.data.activity_price,//活动价
                       title: res.data.name,
                       goodsPicsInfo: res.data.image,
                       selected: true,
@@ -270,11 +255,19 @@ Page({
     let carts = cartItems;         // 获取购物车列表
     let total = 0;
     console.log(cartItems)
+    var isactivr=false//默认列表无活动商品
     for (let i = 0; i < carts.length; i++) {     // 循环列表得到每个数据
       console.log(carts[i])
       if (carts[i].selected) {          // 判断选中才会计算价格
+        // if (cartItems[i].activity_price != 0) {
+        //   total += cartItems[i].quantity * cartItems[i].activity_price;
+        // } else {
+        //   total += cartItems[i].quantity * cartItems[i].price;
+        // }
+        if (carts[i].activity_price != 0){
+          isactivr = true//有活动
+        }
         total = total+ carts[i].quantity * carts[i].price;   // 所有价格加起来
-       
       }
     }
     //this.getTotalPrice()
@@ -308,6 +301,8 @@ Page({
         // })
         if(res.data){
           if (res.data.type == 'money') {//满减活动
+            console.log(totalPrice)
+            console.log(res.data.limit_amount)
             if (totalPrice >= res.data.limit_amount) {
               smsOrder = "活动商品满" + res.data.limit_amount + "元减" + res.data.amount + "元"
               smsorderid = res.data.id
@@ -340,6 +335,9 @@ Page({
           smsorderid = 0
           smsOrderText = ' '
           //console.log(smsOrder)
+        }
+        if (isactivr) {//购物车 选中商品有折扣商品
+          smsOrderText = '活动不共享'
         }
         that.setData({
           smsOrder: smsOrder,
@@ -588,7 +586,13 @@ Page({
     this.setData({
       Cover: true
     })
-    if (this.data.totalPrice == 'NaN' || self.data.carts.length == 0 || this.data.totalPrice==0) {
+    var cartsLength = []//判断勾选商品
+    self.data.carts.map((item) =>{
+      if (item.selected){
+        cartsLength.push(item)
+      }
+    })
+    if (this.data.totalPrice == 'NaN' || self.data.carts.length == 0 || cartsLength.length==0) {
       wx.showToast({
         title: '请选择商品',
         icon: 'succes',
@@ -606,10 +610,12 @@ Page({
         var orderObj = new Object;
         var carts = this.data.carts;
         for (let i = 0; i < carts.length; i++) {
-          let num = carts[i].quantity
-          let pid = carts[i].id
-          orderObj = { num, pid }
-          orderitems.push(orderObj)
+          if (carts[i].selected) {
+            let num = carts[i].quantity
+            let pid = carts[i].id
+            orderObj = { num, pid }
+            orderitems.push(orderObj)
+          }   
         }
         //获得数据
         var bid = wx.getStorageSync('bid') || ''
@@ -693,6 +699,20 @@ Page({
     }
   },
   toAdd: function () {
+    let carts = wx.getStorageSync('cartItems');         // 获取购物车列表
+    var isactivr = false//默认列表无活动商品
+    for (let i = 0; i < carts.length; i++) {     // 循环列表得到每个数据
+      console.log(carts[i])
+      if (carts[i].selected) {          // 判断选中才会计算价格
+        if (carts[i].activity_price != 0) {
+          isactivr = true//有活动
+        }
+      }
+    }
+    if (isactivr){//因为存在活动商品 禁止跳转
+      return false
+    }
+
     var sid = wx.getStorageSync('sid')
     if (this.data.typeCart == 1) {
       console.log(sid)

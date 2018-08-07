@@ -3,7 +3,7 @@ const app = getApp()
 var textUrl = app.globalData.textUrl
 var uuid = app.globalData.uuid
 var util = require('../../../utils/util.js');
-//var uuid = '327f9390d11d4a3aa0ff712d656a7252'
+//var uuid = '23e9d10e08bd479bba9a725a9a1ac504'
 Page({
   data: {
     pagenumber: 1,
@@ -51,25 +51,39 @@ Page({
             data.mjdesc = '满' + datalist[i].buy_amount + '打' + datalist[i].discount*0.1 +'折';
           }
           
-          data.time = datalist[i].apply_date +'&'+ datalist[i].invalid_date;
-
+          //data.time = datalist[i].apply_date +'&'+ datalist[i].invalid_date;
+          data.apply_date = datalist[i].apply_date//开始时间
+          data.invalid_date = datalist[i].invalid_date//结束时间
           if (datalist[i].ranges == null) {
             data.desc = '仅限无人货架使用';
           } else {
             data.desc = datalist[i].ranges;
           }
+          // if (datalist[i].is_expired == true) {
+          //   data.use = '已失效'
+          //   data.useStyle = false
+          // } else {
+          //   if (datalist[i].is_used == true) {
+          //     data.use = '已使用'
+          //     data.useStyle = false
+          //   } else {
+          //     data.use = '立即使用'
+          //     data.useStyle = true
+          //   }
+          // }
+          if (datalist[i].is_used == true) {
+            data.use = '已使用'
+            data.useStyle = false
+          } else {
+            data.use = '立即使用'
+            data.useStyle = true
+          }
           if (datalist[i].is_expired == true) {
             data.use = '已失效'
             data.useStyle = false
-          } else {
-            if (datalist[i].is_used == true) {
-              data.use = '已使用'
-              data.useStyle = false
-            } else {
-              data.use = '立即使用'
-              data.useStyle = true
-            }
           }
+
+          
           datalistNew.push(data)
           //console.log(datalistNew)
         }

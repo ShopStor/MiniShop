@@ -22,8 +22,8 @@
         <view class='goodsItem'>
           <text class="goodsName">{{item.name}}</text>
           <view style='overflow:auto'>
-          <text class='goodsPrice' wx:if='{{item.activityPrice}}' style='padding-right:15rpx'>￥{{item.activityPrice}}</text>
-            <text class='goodsPrice' style="text-decoration:{{item.activityPrice?'line-through':''}}">￥{{item.price}}</text>
+          <text class='goodsPrice' style="text-decoration:{{item.activity_price?'line-through':''}};padding-right:15rpx">￥{{item.price}}</text>
+          <text class='goodsPrice' wx:if='{{item.activity_price}}' style='color:red'>￥{{item.activity_price}}</text>
               <view class='editorItem'>
                 <text bindtap="minusCount" id="{{index}}" data-screenId="{{item.id}}" class='countStyle minusCountStyle' style='line-height:29rpx'>-</text>
                 <text  style='float: left;margin-left:3rpx;width:50rpx;text-align: center;line-height:33rpx' >{{item.quantity}}</text>

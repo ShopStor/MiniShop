@@ -18,7 +18,9 @@
           <text>X{{item.quantity}}</text>
         </view>
         <view class='cartFoodsItem'>
-          <text>￥{{item.price}}</text>
+         <text wx:if="{{item.activity_price==0}}">￥{{item.price}}</text>
+        <text wx:if='{{item.activity_price>0}}'>￥{{item.activity_price}}</text>
+          <!-- <text>￥{{item.price}}</text> -->
         </view>
       </view>
     </view>

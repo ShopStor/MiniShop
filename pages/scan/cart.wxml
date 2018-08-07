@@ -24,8 +24,8 @@
       <!-- 文字描述部分 -->
        <view class='cartFoodsItem'>
         <text>{{item.title}}</text>
-        <text wx:if='{{item.activityPrice}}' style='padding-right:18rpx'>￥{{item.activityPrice}}</text>
-        <text style="text-decoration:{{item.activityPrice?'line-through':''}}" >￥{{item.price}}</text>
+        <text style="text-decoration:{{item.activity_price>0?'line-through':''}};padding-right:18rpx" >￥{{item.price}}</text>
+        <text wx:if='{{item.activity_price>0}}' style='color:red'>￥{{item.activity_price}}</text>
       </view> 
       <!-- 增加减少数量按钮 -->
        <view class='cartFoodsItem'>

@@ -179,6 +179,7 @@ Page({
         })
       }
     }
+   
   },
   minusCount:function (e){//数量减少
    // console.log(e)
@@ -194,8 +195,8 @@ Page({
           // delete cartItems[index]
          // cartItems.remove(index)
           quantity = 0
-          cartItems.splice(item, 1);
-          
+          cartItems.splice(cartItems.indexOf(item), 1);
+          console.log(cartItems)
         }else{
           item.quantity = item.quantity-1
           quantity = item.quantity
@@ -259,7 +260,8 @@ Page({
         quantity: 1,
         price: that.data.childrenArray[index].price,
         title: that.data.childrenArray[index].name,
-        goodsPicsInfo: that.data.childrenArray[index].image
+        goodsPicsInfo: that.data.childrenArray[index].image,
+        activity_price: that.data.childrenArray[index].activity_price
       })
     }
     //加入购物车数据，存入缓存
@@ -286,14 +288,19 @@ Page({
     var cartItems = wx.getStorageSync('cartItems') || []
     var cartNum = 0;
     var total = 0;
-    console.log(cartItems)
+    
     for (let i = 0; i < cartItems.length; i++) {
       cartNum = cartNum + cartItems[i].quantity
-      total += cartItems[i].quantity * cartItems[i].price;
+      if (cartItems[i].activity_price!=0){
+        total += cartItems[i].quantity * cartItems[i].activity_price;
+      }else{
+        total += cartItems[i].quantity * cartItems[i].price;
+      }
     }
+
     var that = this;
     // 获取货架码
-    console.log(cartNum)
+    console.log(total)
     //total.toFixed(2)
     self.setData({
       cartNum: cartNum,

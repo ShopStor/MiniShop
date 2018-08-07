@@ -5,7 +5,7 @@
 }
 
 .coupon-item {
-  height: 200rpx;
+  height: 210rpx;
   background-color: white;
   margin-bottom: 10rpx;
   overflow: hidden;
@@ -35,7 +35,7 @@
 }
 
 .itemTitle {
-  margin-top: 35rpx;
+  margin-top: 15rpx;
   width: 325rpx;
   height: 32rpx;
   font-size: 26rpx;

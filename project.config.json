@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -60,16 +60,16 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 4,
 					"name": "货架码页",
 					"pathName": "pages/scan/shelf",
-					"query": "sid=76"
+					"query": "sid=64"
 				},
 				{
-					"id": -1,
+					"id": 5,
 					"name": "购物车",
 					"pathName": "pages/scan/cart",
-					"query": "pid=137319"
+					"query": "typeCart=2&pid=128011"
 				},
 				{
 					"id": 6,
