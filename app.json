@@ -17,6 +17,7 @@
     "pages/scan/cart",
     "pages/orderPay/submit",
     "pages/orderPay/pay",
+    "pages/orderPay/wxpay",
     "pages/orderPay/paySuc"
     
    

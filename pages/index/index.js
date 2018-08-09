@@ -42,12 +42,17 @@ Page({
       duration: 1000,
       mask: true
     })
+    // wx.navigateTo({
+    //   url: '../orderPay/wxpay?paydata='+'123' 
+    // })
   },
   goToShop: function () {//点击去购物
-   // console.log('123')
     wx.navigateTo({
       url: '../index/webView?url=' + 'https://m.shinshop.com/'
     })
+    // wx.navigateTo({
+    //   url: '../index/webView?url=' + 'http://ec-yii.shinho.net.cn/'
+    //})
   },
   goToFeedback: function () {//点击意见反馈
     wx.showToast({
@@ -56,6 +61,7 @@ Page({
       duration: 1000,
       mask: true
     })
+    
   },
   toast: function () { //点击我的跳转
     wx.navigateTo({

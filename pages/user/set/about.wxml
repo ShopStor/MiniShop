@@ -1,6 +1,6 @@
 <view class='about'>
      <view class='aboutHead'>
-        <image class='iconImg' src='/static/images/logo.png'></image>
+        <image class='iconImg' src='/static/images/logo.png' bindtap='jumpbtn'></image>
         <text>1.0.0</text>
      </view>
      <!-- <view class='setlist'> -->

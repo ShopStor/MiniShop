@@ -54,6 +54,8 @@ Page({
           //data.time = datalist[i].apply_date +'&'+ datalist[i].invalid_date;
           data.apply_date = datalist[i].apply_date//开始时间
           data.invalid_date = datalist[i].invalid_date//结束时间
+          data.gift_type = datalist[i].gift_type//buy非注册券  register注册券
+          data.expiry_date = datalist[i].expiry_date//注册券显示 有效天数
           if (datalist[i].ranges == null) {
             data.desc = '仅限无人货架使用';
           } else {
