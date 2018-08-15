@@ -18,9 +18,7 @@
     "pages/orderPay/submit",
     "pages/orderPay/pay",
     "pages/orderPay/wxpay",
-    "pages/orderPay/paySuc"
-    
-   
+    "pages/orderPay/paySuc" 
   ],
   "window": {
     "backgroundTextStyle": "light",

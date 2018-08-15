@@ -15,9 +15,9 @@ Page({
   
   },
   jumpbtn(){//
-    wx.navigateTo({
-      url: '../../index/webView?url=' + 'https://shinhocloud.kf5.com/kchat/?lang=zh_CN&active_in_iframe=1#/chatbox'
-    })
+    // wx.navigateTo({
+    //   url: '../../index/webView?url=' + 'https://shinhocloud.kf5.com/kchat/?lang=zh_CN&active_in_iframe=1#/chatbox'
+    // })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

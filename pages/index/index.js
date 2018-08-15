@@ -36,23 +36,25 @@ Page({
     intervalTime: '',
   },
   goToRecharge: function () {//点击充值有礼
-    wx.showToast({
-      title: '功能正在建设中',
-      image: '/static/images/prompt.png',
-      duration: 1000,
-      mask: true
-    })
-    // wx.navigateTo({
-    //   url: '../orderPay/wxpay?paydata='+'123' 
+    // wx.showToast({
+    //   title: '功能正在建设中',
+    //   image: '/static/images/prompt.png',
+    //   duration: 1000,
+    //   mask: true
     // })
+    //180813143040849
+    wx.navigateTo({
+      url: '../orderPay/wxpay?order_id='+'180813143040849'
+    })
   },
   goToShop: function () {//点击去购物
-    wx.navigateTo({
-      url: '../index/webView?url=' + 'https://m.shinshop.com/'
-    })
     // wx.navigateTo({
-    //   url: '../index/webView?url=' + 'http://ec-yii.shinho.net.cn/'
-    //})
+    //   url: '../index/webView?url=' + 'https://m.shinshop.com/'
+    // })
+    wx.navigateTo({
+      url: '../index/webView?url=' + 'http://ec-yii.shinho.net.cn'
+    })
+
   },
   goToFeedback: function () {//点击意见反馈
     wx.showToast({
@@ -178,9 +180,12 @@ Page({
     }
     //this.getCode()
     console.log('开始调登录接口')
-
+    wx.showLoading({
+      title: '登录中',
+    })
     wx.login({
       success: function (res) {
+        console.log(res)
         if (res.code) {
           wx.setStorageSync('code', res.code)
           that.setData({//本地存储给data赋值
@@ -188,6 +193,7 @@ Page({
           })
           wx.getUserInfo({
             success: function (info) {
+              // console.log(JSON.stringify(info))
               console.log(info)
               console.log('phone=' + that.data.userNumber)
               console.log('code=' + res.code)
@@ -215,18 +221,19 @@ Page({
                 },
                 success: function (res) {
                   console.log(res)
-                  if (res.data.arg == null) {
-                    var intervalTime = that.data.intervalTime
-                    clearInterval(intervalTime)
-                    that.setData({
-                      userTel: false,
-                      isCover: true,
-                      valueinput: '',
-                      sendCodeMsg: '发送验证码',
-                      currentTime: 60,
-                      disabled: false,
-                      userNumber: ''
-                    })
+                  wx.hideLoading()//隐藏等待框
+                  var intervalTime = that.data.intervalTime
+                  clearInterval(intervalTime)
+                  that.setData({
+                    userTel: false,
+                    isCover: true,
+                    valueinput: '',
+                    sendCodeMsg: '发送验证码',
+                    currentTime: 60,
+                    disabled: false,
+                    userNumber: ''
+                  })
+                  if (res.data.arg == null) {//uuid不存在
                     //res.data.content
                     wx.showModal({
                       title: '提示',
@@ -241,21 +248,32 @@ Page({
                       userTel: true,
                       isCover: false
                     })
+                    wx.showToast({
+                      title: '登录成功',
+                      icon: 'success',
+                      duration: 2000
+                    })
                     var options = wx.getStorageSync('options')
                     if (options) {
                       that.jump(options)
                     }
-
                   }
                 },
                 fail: function (res) {
+                  wx.hideLoading()//隐藏等待框
+                  wx.showModal({
+                    title: '提示',
+                    content: '登陆错误fail',
+                  })
                 }
               })
             }
-          })
-          
-         
+          }) 
         } else {
+          wx.showModal({
+            title: '提示',
+            content: res.errMsg,
+          })
           console.log('登录失败！' + res.errMsg)
         }
       }
@@ -520,7 +538,7 @@ Page({
         }
       },
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         if (res.data.code == 0) {
           resolve(res)
         }

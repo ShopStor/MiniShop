@@ -34,7 +34,6 @@ App({
     var uuid = wx.getStorageSync('userarg') || ''
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    wx.setStorageSync('xiaochengxu', {})
     // // 登录
     // wx.login({
     //   success: function (res) {

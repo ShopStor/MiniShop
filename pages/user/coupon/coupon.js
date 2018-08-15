@@ -36,73 +36,61 @@ Page({
       success: function (res) {
         var datalist = res.data.datalist;
         console.log(datalist)
-        var datalistNew = [];
-        for (let i = 0; i < datalist.length; i++) {
-          var data = new Object();
-          data.amount = datalist[i].amount;
-          data.title = datalist[i].title;
-          data.id = datalist[i].id;
-          data.buy_amount = datalist[i].buy_amount;
-          data.type = datalist[i].type 
-          data.discount = datalist[i].discount 
-          if (datalist[i].type == "money"){//满减
-            data.mjdesc = '满' + datalist[i].buy_amount + '减' + datalist[i].amount;
-          } else if (datalist[i].type == "discount"){//打折
-            data.mjdesc = '满' + datalist[i].buy_amount + '打' + datalist[i].discount*0.1 +'折';
-          }
+        that.dataParsing(datalist)
+        // var datalistNew = [];
+        // for (let i = 0; i < datalist.length; i++) {
+        //   var data = new Object();
+        //   data.amount = datalist[i].amount;
+        //   data.title = datalist[i].title;
+        //   data.id = datalist[i].id;
+        //   data.buy_amount = datalist[i].buy_amount;
+        //   data.type = datalist[i].type 
+        //   data.discount = datalist[i].discount 
+        //   if (datalist[i].type == "money"){//满减
+        //     data.mjdesc = '满' + datalist[i].buy_amount + '减' + datalist[i].amount;
+        //   } else if (datalist[i].type == "discount"){//打折
+        //     data.mjdesc = '满' + datalist[i].buy_amount + '打' + datalist[i].discount*0.1 +'折';
+        //   }
           
-          //data.time = datalist[i].apply_date +'&'+ datalist[i].invalid_date;
-          data.apply_date = datalist[i].apply_date//开始时间
-          data.invalid_date = datalist[i].invalid_date//结束时间
-          data.gift_type = datalist[i].gift_type//buy非注册券  register注册券
-          data.expiry_date = datalist[i].expiry_date//注册券显示 有效天数
-          if (datalist[i].ranges == null) {
-            data.desc = '仅限无人货架使用';
-          } else {
-            data.desc = datalist[i].ranges;
-          }
-          // if (datalist[i].is_expired == true) {
-          //   data.use = '已失效'
-          //   data.useStyle = false
-          // } else {
-          //   if (datalist[i].is_used == true) {
-          //     data.use = '已使用'
-          //     data.useStyle = false
-          //   } else {
-          //     data.use = '立即使用'
-          //     data.useStyle = true
-          //   }
-          // }
-          if (datalist[i].is_used == true) {
-            data.use = '已使用'
-            data.useStyle = false
-          } else {
-            data.use = '立即使用'
-            data.useStyle = true
-          }
-          if (datalist[i].is_expired == true) {
-            data.use = '已失效'
-            data.useStyle = false
-          }
+        //   //data.time = datalist[i].apply_date +'&'+ datalist[i].invalid_date;
+        //   data.apply_date = datalist[i].apply_date//开始时间
+        //   data.invalid_date = datalist[i].invalid_date//结束时间
+        //   data.gift_type = datalist[i].gift_type//buy非注册券  register注册券
+        //   data.expiry_date = datalist[i].expiry_date//注册券显示 有效天数
+        //   if (datalist[i].ranges == null) {
+        //     data.desc = '仅限无人货架使用';
+        //   } else {
+        //     data.desc = datalist[i].ranges;
+        //   }
+        //   if (datalist[i].is_used == true) {
+        //     data.use = '已使用'
+        //     data.useStyle = false
+        //   } else {
+        //     data.use = '立即使用'
+        //     data.useStyle = true
+        //   }
+        //   if (datalist[i].is_expired == true) {
+        //     data.use = '已失效'
+        //     data.useStyle = false
+        //   }
 
           
-          datalistNew.push(data)
-          //console.log(datalistNew)
-        }
-        var contentlistTem = that.data.contentlist
-        var contentlist = datalistNew;
-        if (contentlist.length < that.data.pageSize) {
-          that.setData({
-            contentlist: contentlistTem.concat(contentlist),
-            hasMoreData: false
-          })
-        } else {
-          that.setData({
-            contentlist: contentlistTem.concat(contentlist),
-            hasMoreData: true,
-            pagenumber: that.data.pagenumber + 1
-          })
-        }
+        //   datalistNew.push(data)
+        // }
+        // var contentlistTem = that.data.contentlist
+        // var contentlist = datalistNew;
+        // if (contentlist.length < that.data.pageSize) {
+        //   that.setData({
+        //     contentlist: contentlistTem.concat(contentlist),
+        //     hasMoreData: false
+        //   })
+        // } else {
+        //   that.setData({
+        //     contentlist: contentlistTem.concat(contentlist),
+        //     hasMoreData: true,
+        //     pagenumber: that.data.pagenumber + 1
+        //   })
+        // }
       }
     })
   },
@@ -154,23 +142,21 @@ Page({
     var that = this
     var options= this.data.type
     if (options) {//订单页进入优惠券(读取本地存储可用优惠券)
-      that.getLocalCoupon()
-    } else {
-      
+      var datalist = wx.getStorageSync('couponList')
+      this.dataParsing(datalist)
+      //that.getLocalCoupon()
+    } else {//我的页面进入
       var cartItems = wx.getStorageSync('cartItems')//所有商品缓存数据
       if (cartItems) {
         util.clearStorageData()
-        
       }
       that.getMoreInfo('正在加载数据...')
     }
     console.log(this.data.type)
 
   },
-  getLocalCoupon:function (){//本地优惠券数据解析
-    console.log('本地数据解析')
+  dataParsing(datalist){//公用 列表解析
     var that = this
-    var datalist = wx.getStorageSync('couponList')
     var datalistNew = [];
     for (let i = 0; i < datalist.length; i++) {
       var data = new Object();
@@ -186,8 +172,11 @@ Page({
         data.mjdesc = '满' + datalist[i].buy_amount + '打' + datalist[i].discount * 0.1 + '折';
       }
 
-      data.time = datalist[i].apply_date + '&' + datalist[i].invalid_date;
-
+      // data.time = datalist[i].apply_date + '&' + datalist[i].invalid_date;
+      data.apply_date = datalist[i].apply_date//开始时间
+      data.invalid_date = datalist[i].invalid_date//结束时间
+      data.gift_type = datalist[i].gift_type//buy非注册券  register注册券
+      data.expiry_date = datalist[i].expiry_date//注册券显示 有效天数
       if (datalist[i].ranges == null) {
         data.desc = '仅限无人货架使用';
       } else {
@@ -222,9 +211,12 @@ Page({
         pagenumber: that.data.pagenumber + 1
       })
     }
-
-
-
+  },
+  getLocalCoupon:function (){//本地优惠券数据解析
+    console.log('本地数据解析')
+    var that = this
+    var datalist = wx.getStorageSync('couponList')
+    var datalistNew = [];
   },
   /**
    * 页面上拉触底事件的处理函数
