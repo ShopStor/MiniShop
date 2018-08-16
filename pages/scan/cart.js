@@ -149,18 +149,20 @@ Page({
               })
               return false
             }
-            wx.setStorage({//商铺id
-              key: 'bid',
-              data: Number(res.data.bid),
-              success: function (res) {
-              }
-            })
-            wx.setStorage({//货架id
-              key: 'sid',
-              data: res.data.wms_shelves,
-              success: function (res) {
-              }
-            })
+            // wx.setStorage({//商铺id
+            //   key: 'bid',
+            //   data: Number(res.data.bid),
+            //   success: function (res) {
+            //   }
+            // })
+            wx.setStorageSync('bid', Number(res.data.bid))//商铺id
+            // wx.setStorage({//货架id
+            //   key: 'sid',
+            //   data: res.data.wms_shelves,
+            //   success: function (res) {
+            //   }
+            // })
+            wx.setStorageSync('sid', res.data.wms_shelves)//商铺id
             //console.log(cartItems)
             // 缓存
             //var cartItems = wx.getStorageSync('cartItems') || []
@@ -213,12 +215,13 @@ Page({
             })
             //console.log(res.data.wms_shelves)
             //加入购物车数据，存入缓存
-            wx.setStorage({
-              key: 'cartItems',
-              data: cartItems,
-              success: function (res) {
-              }
-            })
+            wx.setStorageSync('cartItems', cartItems)
+            // wx.setStorage({
+            //   key: 'cartItems',
+            //   data: cartItems,
+            //   success: function (res) {
+            //   }
+            // })
             
             // let carts = cartItems;         // 获取购物车列表
             // let total = 0;
@@ -345,10 +348,11 @@ Page({
           smsOrderText: smsOrderText
         })
         //console.log(smsorderid)
-        wx.setStorage({
-          key: "smsorderid",
-          data: smsorderid
-        })
+        // wx.setStorage({
+        //   key: "smsorderid",
+        //   data: smsorderid
+        // })
+        wx.setStorageSync('smsorderid', smsorderid)
         // wx.showModal({
         //   title: '提示',
         //   content: smsorderid+'活动id',
@@ -398,19 +402,21 @@ Page({
     var bid = wx.getStorageSync('bid') || ''
     console.log('bid=' + bid)
     if(carts.length==0){
-      wx.setStorage({
-        key: 'pay_amount',
-        data: 0,
-        success: function (res) {
-        }
-      })
+      // wx.setStorage({
+      //   key: 'pay_amount',
+      //   data: 0,
+      //   success: function (res) {
+      //   }
+      // })
+      wx.setStorageSync('pay_amount', 0)
       // total.toFixed(2)
-      wx.setStorage({
-        key: 'pay_money',
-        data: 0,
-        success: function (res) {
-        }
-      })
+      // wx.setStorage({
+      //   key: 'pay_money',
+      //   data: 0,
+      //   success: function (res) {
+      //   }
+      // })
+      wx.setStorageSync('pay_money', 0)
       that.setData({                // 最后赋值到data中渲染到页面
         totalPrice: 0
       });
@@ -436,19 +442,21 @@ Page({
       },
       success: function (res) {
         //console.log(res)
-        wx.setStorage({
-          key: 'pay_amount',
-          data: util.toDecimal2(res.data.amount),
-          success: function (res) {
-          }
-        })
+        // wx.setStorage({
+        //   key: 'pay_amount',
+        //   data: util.toDecimal2(res.data.amount),
+        //   success: function (res) {
+        //   }
+        // })
+        wx.setStorageSync('pay_amount', util.toDecimal2(res.data.amount))
         // res.data.pay_amount.toFixed(2)
-        wx.setStorage({
-          key: 'pay_money',
-          data: util.toDecimal2(res.data.pay_amount),
-          success: function (res) {
-          }
-        })
+        // wx.setStorage({
+        //   key: 'pay_money',
+        //   data: util.toDecimal2(res.data.pay_amount),
+        //   success: function (res) {
+        //   }
+        // })
+        wx.setStorageSync('pay_money', util.toDecimal2(res.data.pay_amount))
         wx.hideLoading()
         that.setData({                // 最后赋值到data中渲染到页面
           totalPrice: res.data.pay_amount.toFixed(2),
@@ -456,12 +464,13 @@ Page({
         });
 
         //加入购物车数据，存入缓存
-        wx.setStorage({
-          key: 'cartItems',
-          data: that.data.carts,
-          success: function (res) {
-          }
-        })
+        wx.setStorageSync('cartItems', that.data.carts)
+        // wx.setStorage({
+        //   key: 'cartItems',
+        //   data: that.data.carts,
+        //   success: function (res) {
+        //   }
+        // })
       }
     }) 
   },
@@ -562,12 +571,13 @@ Page({
     this.setData({
       carts: carts
     });
-    wx.setStorage({
-      key: 'cartItems',
-      data: this.data.carts,
-      success: function (res) {
-      }
-    })
+    // wx.setStorage({
+    //   key: 'cartItems',
+    //   data: this.data.carts,
+    //   success: function (res) {
+    //   }
+    // })
+    wx.setStorageSync('cartItems', this.data.carts)
     this.getTotalPrice();
     if (!carts.length) {         // 如果购物车为空
       this.setData({
@@ -645,45 +655,50 @@ Page({
             console.log(bid)
 
             console.log(res)
-            wx.setStorage({
-              key: 'pay_amount',
-              data: res.data.amount,
-              success: function (res) {
-              }
-            })
+            // wx.setStorage({
+            //   key: 'pay_amount',
+            //   data: res.data.amount,
+            //   success: function (res) {
+            //   }
+            // })
+            wx.setStorageSync('pay_amount', res.data.amount)
             // total.toFixed(2)
-            wx.setStorage({
-              key: 'pay_money',
-              data: res.data.pay_amount.toFixed(2),
-              success: function (res) {
-              }
-            })
+            // wx.setStorage({
+            //   key: 'pay_money',
+            //   data: res.data.pay_amount.toFixed(2),
+            //   success: function (res) {
+            //   }
+            // })
+            wx.setStorageSync('pay_money', res.data.pay_amount.toFixed(2))
             //存储可用优惠券列表
             var is_coupon_allowed = null
             console.log('uulist')
             console.log(res.data.uuList)
             if (res.data.uuList && res.data.uuList.length>0){
               is_coupon_allowed = true
-              wx.setStorage({
-                key: 'couponList',
-                data: res.data.uuList,
-                success: function (res) {
-                }
-              })
+              wx.setStorageSync('couponList', res.data.uuList)
+              // wx.setStorage({
+              //   key: 'couponList',
+              //   data: res.data.uuList,
+              //   success: function (res) {
+              //   }
+              // })
             }else{
               is_coupon_allowed = false
             }
-            wx.setStorage({//判断是否可使用优惠券
-              key: "is_coupon_allowed",
-              data: is_coupon_allowed
-            })
+            // wx.setStorage({//判断是否可使用优惠券
+            //   key: "is_coupon_allowed",
+            //   data: is_coupon_allowed
+            // })
+            wx.setStorageSync('is_coupon_allowed', is_coupon_allowed)//判断是否可使用优惠券
             //加入购物车数据，存入缓存
-            wx.setStorage({
-              key: 'cartItems',
-              data: self.data.carts,
-              success: function (res) {
-              }
-            })
+            // wx.setStorage({
+            //   key: 'cartItems',
+            //   data: self.data.carts,
+            //   success: function (res) {
+            //   }
+            // })
+            wx.setStorageSync('cartItems', self.data.carts)
             // that.setData({
             //   backState: false
             // })

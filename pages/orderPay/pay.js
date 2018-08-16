@@ -52,11 +52,14 @@ Page({
     
 
     for (let i = 0; i < carts.length; i++) {
-      var orderObj = new Object;
-      orderObj.num = carts[i].quantity
-      orderObj.pid = carts[i].id
-      orderObj.type = 'sale'
-      orderitems.push(orderObj)
+      if (carts[i].selected){
+        var orderObj = new Object;
+        orderObj.num = carts[i].quantity
+        orderObj.pid = carts[i].id
+        orderObj.type = 'sale'
+        orderitems.push(orderObj)
+      }
+      
     }
     //获得数据
     var bid = wx.getStorageSync('bid')
@@ -105,7 +108,7 @@ Page({
             Cover:true
           })
           wx.showModal({
-            title: '提示',
+            title: '订单错误',
             content: res.data.message,
             success:function(res){
               wx.redirectTo({//跳转主页

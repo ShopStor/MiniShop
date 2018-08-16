@@ -39,12 +39,13 @@ Page({
       cartNum: cartNum,
       cartMoney: total.toFixed(2)
     })
-    wx.setStorage({
-      key: 'sid',
-      data: Number(options.sid),
-      success: function (res) {
-      }
-    })
+    // wx.setStorage({
+    //   key: 'sid',
+    //   data: Number(options.sid),
+    //   success: function (res) {
+    //   }
+    // })
+    wx.setStorageSync('sid', Number(options.sid))
     //获得数据
     wx.request({
       url: textUrl + 'pms/getByShelvesPorList',
@@ -90,7 +91,8 @@ Page({
         }
         var bid = res.data.prolist[0].prolist[0].bid
         console.log('bid='+bid)
-        wx.setStorage({ key: "bid", data: Number(bid) })
+        //wx.setStorage({ key: "bid", data: Number(bid) })
+        wx.setStorageSync('bid',Number(bid))
         var prolists = res.data.prolist[0].prolist
 
         for (let i = 0; i < prolists.length; i++) {
@@ -210,13 +212,15 @@ Page({
         self.setData({
           childrenArray: childrenArray
         })
-        wx.setStorage({
-          key: 'cartItems',
-          data: cartItems,
-          success: function (res) {
-            self.getPriceAndNum()
-          }
-        })
+        wx.setStorageSync('cartItems', cartItems)
+        self.getPriceAndNum()
+        // wx.setStorage({
+        //   key: 'cartItems',
+        //   data: cartItems,
+        //   success: function (res) {
+        //     self.getPriceAndNum()
+        //   }
+        // })
       }
     })
   },

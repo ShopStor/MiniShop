@@ -224,16 +224,17 @@ Page({
                   wx.hideLoading()//隐藏等待框
                   var intervalTime = that.data.intervalTime
                   clearInterval(intervalTime)
-                  that.setData({
-                    userTel: false,
-                    isCover: true,
-                    valueinput: '',
-                    sendCodeMsg: '发送验证码',
-                    currentTime: 60,
-                    disabled: false,
-                    userNumber: ''
-                  })
+                 
                   if (res.data.arg == null) {//uuid不存在
+                    that.setData({
+                      userTel: false,
+                      isCover: true,
+                      valueinput: '',
+                      sendCodeMsg: '发送验证码',
+                      currentTime: 60,
+                      disabled: false,
+                      userNumber: ''
+                    })
                     //res.data.content
                     wx.showModal({
                       title: '提示',
@@ -241,8 +242,11 @@ Page({
                     })
                     console.log(res.data.content)
                   } else {
-                    wx.setStorage({ key: "userTel", data: that.data.userNumber }) //信息存本地
-                    wx.setStorage({ key: "userarg", data: res.data.arg }) //信息存本地
+                    wx.setStorageSync('userTel', that.data.userNumber)
+                    console.log(that.data.userNumber)
+                    wx.setStorageSync('userarg', res.data.arg)
+                   // wx.setStorage({ key: "userTel", data: that.data.userNumber }) //信息存本地
+                   // wx.setStorage({ key: "userarg", data: res.data.arg }) //信息存本地
                     app.globalData.uuid = res.data.arg;
                     that.setData({
                       userTel: true,
@@ -258,6 +262,7 @@ Page({
                       that.jump(options)
                     }
                   }
+                  
                 },
                 fail: function (res) {
                   wx.hideLoading()//隐藏等待框

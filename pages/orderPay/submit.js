@@ -162,12 +162,13 @@ Page({
     var that = this;
     console.log(that.data.carts)
     var that = this
-    wx.setStorage({
-      key: 'carts',
-      data: that.data.carts,
-      success: function (res) {
-      }
-    })
+    // wx.setStorage({
+    //   key: 'carts',
+    //   data: that.data.carts,
+    //   success: function (res) {
+    //   }
+    // })
+    wx.setStorageSync('carts', that.data.carts)
     var bid = wx.getStorageSync('bid') || ''
     console.log('bid='+bid)
     if(bid){// 解决bid不存在灵异情况
