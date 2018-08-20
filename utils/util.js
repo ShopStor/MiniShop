@@ -159,6 +159,7 @@ function clearStorageData(){//清除存储数据
       }
     })
   }
+  wx.removeStorageSync('wxWebView_order')//微商城 支付时记录订单号
 
 }
 //强制保留两位小数

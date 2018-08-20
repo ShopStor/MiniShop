@@ -3,7 +3,7 @@ const app = getApp()
 var textUrl = app.globalData.textUrl
 var uuid = app.globalData.uuid
 var util = require('../../../utils/util.js');
-//var uuid = '23e9d10e08bd479bba9a725a9a1ac504'
+//var uuid = 'e867964cd1bd460d9c8ecd6ed4848e5a'
 Page({
   data: {
     pagenumber: 1,
@@ -182,18 +182,17 @@ Page({
       } else {
         data.desc = datalist[i].ranges;
       }
-      if (datalist[i].is_expired == true) {
-        data.use = '已失效'
+      if (datalist[i].is_used == true) {
+        data.use = '已使用'
         data.useStyle = false
       } else {
-        if (datalist[i].is_used == true) {
-          data.use = '已使用'
+        data.use = '立即使用'
+        data.useStyle = true
+        if (datalist[i].is_expired == true) {
+          data.use = '已失效'
           data.useStyle = false
-        } else {
-          data.use = '立即使用'
-          data.useStyle = true
         }
-      }
+      }   
       datalistNew.push(data)
       //console.log(datalistNew)
     }

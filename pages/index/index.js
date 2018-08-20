@@ -36,23 +36,24 @@ Page({
     intervalTime: '',
   },
   goToRecharge: function () {//点击充值有礼
-    // wx.showToast({
-    //   title: '功能正在建设中',
-    //   image: '/static/images/prompt.png',
-    //   duration: 1000,
-    //   mask: true
-    // })
-    //180813143040849
-    wx.navigateTo({
-      url: '../orderPay/wxpay?order_id='+'180813143040849'
+    wx.showToast({
+      title: '功能正在建设中',
+      image: '/static/images/prompt.png',
+      duration: 1000,
+      mask: true
     })
+    //180813143040849
+    // wx.navigateTo({
+    //   url: '../orderPay/wxpay?order_id='+'180820112531592'
+    // })
   },
   goToShop: function () {//点击去购物
     // wx.navigateTo({
     //   url: '../index/webView?url=' + 'https://m.shinshop.com/'
     // })
+    //https://ec-yii.shinho.net.cn
     wx.navigateTo({
-      url: '../index/webView?url=' + 'http://ec-yii.shinho.net.cn'
+      url: '../index/webView?url=' + 'https://ec-yii.shinho.net.cn'
     })
 
   },

@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/index/webView",
+    "pages/index/wxWebView",
     "pages/logs/logs",
     "pages/user/user",
     "pages/user/personIfo/personIfo",
