@@ -43,8 +43,10 @@ Page({
       mask: true
     })
     //180813143040849
+    //180827111244540
+    //180827112462646
     // wx.navigateTo({
-    //   url: '../orderPay/wxpay?order_id='+'180820112531592'
+    //   url: '../orderPay/wxpay?order_id=' +'180827111244540'
     // })
   },
   goToShop: function () {//点击去购物
@@ -53,7 +55,7 @@ Page({
     // })
     //https://ec-yii.shinho.net.cn
     wx.navigateTo({
-      url: '../index/webView?url=' + 'https://ec-yii.shinho.net.cn'
+      url: '../index/webView?url=' + 'https://m.shinshop.com/'
     })
 
   },
@@ -72,7 +74,7 @@ Page({
     })
   },
   isPhoneNo: function (phone){//验证手机号
-    var pattern = /^1[345678]\d{9}$/;
+    var pattern = /^1[3456789]\d{9}$/;
     return pattern.test(phone); 
   },
   sendCode: function (e) {//发送验证码

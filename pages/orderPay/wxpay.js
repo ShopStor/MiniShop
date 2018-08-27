@@ -2,7 +2,8 @@ const app = getApp()    // 加这句就可以使用app.js里的内容
 var textUrl = app.globalData.textUrl
 var uuid = app.globalData.uuid
 var util = require('../../utils/util.js');
-
+//text (测试)  formal(正式)
+var apiType ='formal'
 Page({
   data: {
       order_id:'',//订单号
@@ -25,7 +26,14 @@ Page({
   },
   getamountStr(){//根据订单号获取支付参数(加密金额)  (微商城接口)
     var self =this
-    var url = 'https://ec-api.shinho.net.cn/v1/orders/small_program_order?orderid=' + this.data.order_id
+    //https://ec-api.shinho.net.cn/v1/orders/small_program_order?orderid=   测试的
+    //https://api.shinshop.com/v1/orders/small_program_order?orderid=  正式的
+    var url =''
+    if (apiType=='text'){
+      url = 'https://ec-api.shinho.net.cn/v1/orders/small_program_order?orderid=' + this.data.order_id
+    }else{
+      url = 'https://api.shinshop.com/v1/orders/small_program_order?orderid=' + this.data.order_id
+    }
     console.log(url)
     wx.request({
       url: url,
@@ -48,8 +56,8 @@ Page({
   },
   getPaydata(){//获取支付参数 (无人货架接口)
     var self = this
-    var url = textUrl+'/oms/payInOnline'
-    console.log(url)
+    var url = textUrl+'oms/payInOnline'
+    //console.log(url)
     var data = {
       uuid: wx.getStorageSync('userarg'),
       orderAmout: self.data.amountStr,
@@ -114,23 +122,49 @@ Page({
         'fail': function (res) {
           console.log('支付错误')
           console.log(res.errMsg)
-          wx.showModal({
-            title: '提示',
-            content: '支付失败',
+          wx.showToast({
+            title: '支付失败',
+            icon: 'success',
+            duration: 2000
           })
+          // wx.showModal({
+          //   title: '提示',
+          //   content: '支付失败',
+          // })
           //测试:https://ec-yii.shinho.net.cn
           //正式:https://m.shinshop.com/
-          wx.redirectTo({
-            url: '../index/wxWebView?url=' + 'https://ec-yii.shinho.net.cn/payment-error'
-          })
+          //跳转失败(正式):https://m.shinshop.com/payment-error
+          // wx.redirectTo({
+          //   url: '../index/wxWebView?url=' + 'https://m.shinshop.com/payment-error'
+          // })
+          if (apiType == 'text') {
+            wx.redirectTo({
+              url: '../index/wxWebView?url=' + 'https://ec-yii.shinho.net.cn/payment-error'
+            })
+          } else {
+            wx.redirectTo({
+              url: '../index/wxWebView?url=' + 'https://m.shinshop.com/payment-error'
+            })
+          }
         },
         'complete': function (res) {//上线注释
         }
       })
   },
   changeStatus(){//更改订单状态
+    wx.showLoading({
+      title: '加载中',
+    })
     var self = this
-    var url = 'https://ec-api.shinho.net.cn/v1/orders/small_program_order?status=success&orderid='+this.data.order_id
+    //测试   https://ec-api.shinho.net.cn/v1/orders/small_program_order?status=success&orderid=
+    //var url = 'https://api.shinshop.com/v1/orders/small_program_order?status=success&orderid='+this.data.order_id
+
+    var url = ''
+    if (apiType == 'text') {
+      url = 'https://ec-api.shinho.net.cn/v1/orders/small_program_order?status=success&orderid=' + this.data.order_id
+    } else {
+      url = 'https://api.shinshop.com/v1/orders/small_program_order?status=success&orderid=' + this.data.order_id
+    }
     //console.log('更改订单状态='+url)
     wx.request({
       url: url,
@@ -146,10 +180,21 @@ Page({
       success: function (res) {
         console.log('更改支付状态')
         //测试:https://ec-yii.shinho.net.cn
-          //正式:https://m.shinshop.com/
-        wx.redirectTo({
-          url: '../index/wxWebView?url=' + 'https://ec-yii.shinho.net.cn/payment-success?order_id=' + self.data.order_id
-        })
+          //正式:https://m.shinshop.com/     
+          //跳转成功(正式):https://m.shinshop.com/payment-success
+        // wx.redirectTo({
+        //   url: '../index/wxWebView?url=' + 'https://m.shinshop.com/payment-success'
+        // })
+        wx.hideLoading()//隐藏等待框
+        if (apiType == 'text') {
+          wx.redirectTo({
+            url: '../index/wxWebView?url=' + 'https://ec-yii.shinho.net.cn/payment-success'
+          })
+        } else {
+          wx.redirectTo({
+            url: '../index/wxWebView?url=' + 'https://m.shinshop.com/payment-success'
+          })
+        }
         console.log(res)
        
       }

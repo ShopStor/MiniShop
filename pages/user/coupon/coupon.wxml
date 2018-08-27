@@ -9,8 +9,9 @@
         <view class='couponview'>
           <text class='itemTitle'>{{item.title}}</text>
           <text class='itemDesc'>. {{item.mjdesc}}</text>
-          <text class='itemDesc' wx:if="{{item.gift_type=='buy'}}">. 开始:{{item.apply_date}}</text>
-          <text class='itemDesc' wx:if="{{item.gift_type=='buy'}}">. 结束:{{item.invalid_date}}</text>
+          <text class='itemDesc' wx:if="{{item.gift_type!='register'}}">. 开始:{{item.apply_date}}</text>
+          <text class='itemDesc' wx:if="{{item.gift_type!='register'}}">. 结束:{{item.invalid_date}}</text>
+          <!-- 注册券 -->
           <text class='itemDesc' wx:if="{{item.gift_type=='register'}}">. 有效天数:{{item.expiry_date}}</text>
           <text class='itemDesc'>. {{item.desc}}</text>
         </view>

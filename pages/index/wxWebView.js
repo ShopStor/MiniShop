@@ -13,10 +13,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var orderid = wx.getStorageSync('wxWebView_order')
     this.setData({
       url: options.url,
-      order_id: wx.getStorageSync('wxWebView_order')
+      order_id: orderid
     })
+    // wxWebView_order
+    wx.removeStorageSync('wxWebView_order')
+    console.log(this.data.url)
+    console.log(this.data.order_id)
     
   },
 
