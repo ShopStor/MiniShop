@@ -160,7 +160,7 @@ Page({
               'signType': 'MD5',
               'paySign': payData.paySign,
               'success': function (res) {
-                //   console.log(res)
+                   console.log(res)
                 //  console.log('支付正确')
                 console.log('top3')
                 self.setData({

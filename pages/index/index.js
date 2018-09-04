@@ -46,7 +46,7 @@ Page({
     //180827111244540
     //180827112462646
     // wx.navigateTo({
-    //   url: '../orderPay/wxpay?order_id=' +'180827111244540'
+    //   url: '../orderPay/wxpay?order_id=' +'180904101248743'
     // })
   },
   goToShop: function () {//点击去购物

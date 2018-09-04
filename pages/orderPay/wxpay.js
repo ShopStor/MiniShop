@@ -19,9 +19,7 @@ Page({
       title: '加载中',
     })
     console.log(options.order_id)//订单id
-    this.data.order_id = options.order_id
-   
-    console.log(this.data.order_id.substring(0, 2))//截取2位
+    this.data.order_id = options.order_id   
     this.getamountStr()
   },
   getamountStr(){//根据订单号获取支付参数(加密金额)  (微商城接口)
@@ -61,7 +59,7 @@ Page({
     var data = {
       uuid: wx.getStorageSync('userarg'),
       orderAmout: self.data.amountStr,
-      sn: self.data.order_id.substring(0, 2)
+      sn: self.data.order_id
     }
     console.log(data)
     wx.request({
@@ -80,7 +78,11 @@ Page({
         console.log(res)
         if (res.data.state == "success"){//参数请求成功
 
-          self.data.payData = res.data
+          //self.data.payData = res.data
+          self.setData({
+            payData: res.data
+          })
+          console.log(self.data.payData.out_trade_no)
           self.pay()
         }else{
             wx.showModal({
@@ -161,11 +163,11 @@ Page({
 
     var url = ''
     if (apiType == 'text') {
-      url = 'https://ec-api.shinho.net.cn/v1/orders/small_program_order?status=success&orderid=' + this.data.order_id
+      url = 'https://ec-api.shinho.net.cn/v1/orders/small_program_order?status=success&orderid=' + this.data.order_id + '&ordersn=' + this.data.payData.out_trade_no
     } else {
-      url = 'https://api.shinshop.com/v1/orders/small_program_order?status=success&orderid=' + this.data.order_id
+      url = 'https://api.shinshop.com/v1/orders/small_program_order?status=success&orderid=' + this.data.order_id + '&ordersn=' + this.data.payData.out_trade_no
     }
-    //console.log('更改订单状态='+url)
+    console.log('更改订单状态='+url)
     wx.request({
       url: url,
       method: "get",
