@@ -60,6 +60,7 @@
 
 .itemView {
   margin: 30rpx 0;
+  width: 550rpx;
 }
 
 .input {
