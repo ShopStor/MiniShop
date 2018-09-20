@@ -124,18 +124,41 @@ Page({
           "Content-Type": "application/x-www-form-urlencoded"  //post
         },
         complete: function (res) {
-          if (res == null || res.data == null) {
-            reject(new Error('网络请求失败'))
-          }
+         console.log(res)
         },
         success: function (res) {
-          if (res.data.code == 0) {
-            resolve(res)
+          console.log('验证码='+res.data.arg)
+          if (res.data.type =='success'){
+            that.setData({
+              // userCode: res.data.arg,//上线注释
+              backuserCode: res.data.arg
+            })
+          }else{
+            wx.showModal({
+              title: '验证码提示',
+              content: res.data.content,
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
           }
-          console.log(res.data.arg)
-          that.setData({
-            // userCode: res.data.arg,//上线注释
-            backuserCode: res.data.arg
+        },
+        fail:function(res){
+          console.log('华丽的分割线============')
+          console.log('手机号='+that.data.userNumber)
+          console.log('接口=' + textUrl + 'user/registerCode')
+          console.log(res)
+          console.log('华丽的分割线============')
+          wx.showModal({
+            title: '验证码提示',
+            content: '验证码调用接口失败',
+            success: function (res) {
+            
+            }
           })
         }
       })
@@ -218,9 +241,7 @@ Page({
                   "Content-Type": "application/x-www-form-urlencoded"  //post
                 },
                 complete: function (res) {
-                  if (res == null || res.data == null) {
-                    reject(new Error('网络请求失败'))
-                  }
+                  console.log(res)
                 },
                 success: function (res) {
                   console.log(res)
@@ -505,6 +526,13 @@ Page({
         "Content-Type": "application/json"
       },
       complete: function (res) {
+        console.log(res)
+        // if (res == null || res.data == null) {
+        //   reject(new Error('网络请求失败'))
+        // }
+      },
+      success: function (res) {
+       
         var arrImg = res.data;
         for (let i = 0; i < arrImg.length; i++) {
           arrImg[i].image = imgUrl + arrImg[i].image
@@ -512,14 +540,6 @@ Page({
         that.setData({
           imgUrlsBanner: arrImg
         });
-        if (res == null || res.data == null) {
-          reject(new Error('网络请求失败'))
-        }
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          resolve(res)
-        }
       }
     })
     // 请求下部广告
@@ -533,6 +553,11 @@ Page({
         "Content-Type": "application/json"
       },
       complete: function (res) {
+       console.log(res)
+      },
+      success: function (res) {
+        // console.log(res)
+        
         var arrImg = res.data;
         for (let i = 0; i < arrImg.length; i++) {
           arrImg[i].image = imgUrl + arrImg[i].image
@@ -540,16 +565,6 @@ Page({
         that.setData({
           imgUrlsAct: arrImg
         });
-
-        if (res == null || res.data == null) {
-          reject(new Error('网络请求失败'))
-        }
-      },
-      success: function (res) {
-        // console.log(res)
-        if (res.data.code == 0) {
-          resolve(res)
-        }
       }
     })
   }
