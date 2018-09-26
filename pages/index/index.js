@@ -155,7 +155,7 @@ Page({
           console.log('华丽的分割线============')
           wx.showModal({
             title: '验证码提示',
-            content: '验证码调用接口失败',
+            content: res.errMsg,
             success: function (res) {
             
             }

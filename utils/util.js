@@ -180,12 +180,28 @@ function toDecimal2(x) {
   }
   return s;
 }
-
-
+//点击量
+function clickQuantity(type){
+  wx.request({//获取轮播图
+    url: textUrl + 'sms/getAdsenseList',
+    data: {
+      position: 'indexfoot'
+    },
+    method: "GET",
+    header: {
+      "Content-Type": "application/json"
+    },
+    success: function (res) {
+      console.log('点击量')
+       console.log(res)
+    }
+  })
+}
 module.exports = {
   formatTime: formatTime,
   getSmallImge: getSmallImge,
   trim: trim,
   clearStorageData: clearStorageData,
-  toDecimal2: toDecimal2
+  toDecimal2: toDecimal2,
+  clickQuantity: clickQuantity
 }
